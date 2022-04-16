@@ -4,14 +4,12 @@ import java.util.Map;
 
 public class Instruction {
     private final int pid;
-    private final int operation;
+    private final String operation;
     private final int address;
-
-    static final Map<String , Integer> operations = Map.of("Start", 0, "Write", 1, "Read", 2, "Terminate", 3);
 
     public Instruction(int pid, String operation, int address) {
         this.pid = pid;
-        this.operation = operations.get(operation);
+        this.operation = operation;
         this.address = address;
     }
 
@@ -19,7 +17,7 @@ public class Instruction {
         return pid;
     }
 
-    public int getOperation() {
+    public String getOperation() {
         return operation;
     }
 
