@@ -1,10 +1,6 @@
 package com.besturingssystemen2.opdracht2;
 
-public class EntryPT {
-
-    private final int pid;
-
-    private int pageNumber;
+public class Page {
 
     private boolean present;
 
@@ -14,25 +10,11 @@ public class EntryPT {
 
     private int frameNumber;
 
-    public EntryPT(int pid, int pageNumber) {
-        this.pid = pid;
-        this.pageNumber = pageNumber;
+    public Page() {
         this.present = false;
         this.modify = false;
-        this.lastAccess = 0;
-        this.frameNumber = 0;
-    }
-
-    public int getPid() {
-        return pid;
-    }
-
-    public int getPageNumber() {
-        return pageNumber;
-    }
-
-    public void setPageNumber(int pageNumber) {
-        this.pageNumber = pageNumber;
+        this.lastAccess = -1;
+        this.frameNumber = -1;
     }
 
     public boolean isPresent() {
@@ -65,5 +47,17 @@ public class EntryPT {
 
     public void setFrameNumber(int frameNumber) {
         this.frameNumber = frameNumber;
+    }
+
+    public void setPage(int frameNumber) {
+        this.present = true;
+        this.frameNumber = frameNumber;
+    }
+
+    public void resetPage() {
+        this.present = false;
+        this.modify = false;
+        this.lastAccess = -1;
+        this.frameNumber = -1;
     }
 }

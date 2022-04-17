@@ -3,11 +3,12 @@ package com.besturingssystemen2.opdracht2;
 public class Frame {
     private final int frameNumber;
     private int pid;
-    private EntryPT entryPT;
+    private Page page;
 
     public Frame(int frameNumber) {
         this.frameNumber = frameNumber;
-        this.entryPT = null;
+        this.pid = -1;
+        this.page = null;
     }
 
     public int getFrameNumber() {
@@ -22,11 +23,11 @@ public class Frame {
         this.pid = pid;
     }
 
-    public EntryPT getEntryPT() {
-        return entryPT;
+    public Page getPage() {
+        return page;
     }
 
-    public void setEntryPT(EntryPT entryPT) {
-        this.entryPT = entryPT;
+    public void setPage(Page page) {
+        this.page = page;
     }
 }

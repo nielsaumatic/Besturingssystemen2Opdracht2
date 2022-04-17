@@ -9,7 +9,7 @@ public class Main {
 
         Controller controller = new Controller(instructions);
 
-        //controller.allInstructions();
+        controller.allInstructions();
 
 
         GUIApplication.launchGUI();
