@@ -17,6 +17,8 @@ public class Process {
         for (int i = 0; i < 16; i++) {
             pageTable.add(new Page());
         }
+
+        numberOfWrites = 0;
     }
 
     public int getPid() {
@@ -25,6 +27,14 @@ public class Process {
 
     public List<Page> getPageTable() {
         return pageTable;
+    }
+
+    public int getNumberOfWrites() {
+        return numberOfWrites;
+    }
+
+    public void setNumberOfWrites(int numberOfWrites) {
+        this.numberOfWrites = numberOfWrites;
     }
 
     public int addressToPage(int address) {

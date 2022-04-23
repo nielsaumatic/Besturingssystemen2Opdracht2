@@ -50,14 +50,14 @@ public class Page {
     }
 
     public void setPage(int frameNumber) {
-        this.present = true;
-        this.frameNumber = frameNumber;
+        this.setPresent(true);
+        this.setFrameNumber(frameNumber);
     }
 
     public void resetPage() {
-        this.present = false;
-        this.modify = false;
-        this.lastAccess = -1;
-        this.frameNumber = -1;
+        this.setPresent(false);
+        this.setModify(false);
+        this.setLastAccess(-1);
+        this.setFrameNumber(-1);
     }
 }
