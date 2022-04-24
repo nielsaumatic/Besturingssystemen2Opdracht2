@@ -16,6 +16,14 @@ public class Controller {
 
     private final List<Instruction> instructions;
 
+    public List<Frame> getRAM() {
+        return RAM;
+    }
+
+    public Set<Integer> getProcessesInRAM() {
+        return processesInRAM;
+    }
+
     public Controller(List<Instruction> instructions) {
         this.RAM = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
@@ -175,5 +183,13 @@ public class Controller {
             page.setPage(lruFrame.getFrameNumber());
         }
         page.setLastAccess(timer);
+    }
+
+    public int getTimer(){
+        return timer;
+    }
+
+    public List<Instruction> getInstructions(){
+        return instructions;
     }
 }

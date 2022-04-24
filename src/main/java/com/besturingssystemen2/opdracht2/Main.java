@@ -12,6 +12,6 @@ public class Main {
         //controller.allInstructions();
 
 
-        //GUIApplication.launchGUI();
+        GUIApplication.launchGUI();
     }
 }
