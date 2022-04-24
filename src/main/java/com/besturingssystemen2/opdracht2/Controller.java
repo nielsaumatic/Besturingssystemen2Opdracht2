@@ -10,6 +10,10 @@ public class Controller {
 
     private int timer;
 
+    public List<Process> getProcesses() {
+        return processes;
+    }
+
     private final List<Process> processes;
 
     private final Set<Integer> processesInRAM;
