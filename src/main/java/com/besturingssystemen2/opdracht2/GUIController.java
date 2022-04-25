@@ -76,20 +76,20 @@ public class GUIController implements Initializable {
         vtimer = c.getTimer();
         vram = copy(c.getRAM());
 
-        updatePageWrites();
-
-        c.oneInstruction();
-
         lbTimer.setText("Timer: " + vtimer);
-        lvRam.getItems().clear();
-        lvRam.getItems().addAll(vprocesseninram);
-        resetLvPagesRam();
+        updatePageWrites();
         updateNextInstruction();
         updateLastInstruction();
         updateFrames();
 
+        if(c.getInstructions().size() > vtimer) {
+            c.oneInstruction();
+            updatePageTable();
+        }
 
-        updatePageTable();
+        lvRam.getItems().clear();
+        lvRam.getItems().addAll(vprocesseninram);
+        resetLvPagesRam();
 
     }
 
@@ -130,9 +130,15 @@ public class GUIController implements Initializable {
                                         "Virtual adress: " + c.getInstructions().get(vtimer-1).getAddress());
     }
     private void updateNextInstruction(){
-        lbNextInstructionSpec.setText("Process: " + c.getInstructions().get(vtimer).getPid() + "\n" +
-                                        "Operation: " + c.getInstructions().get(vtimer).getOperation() + "\n" +
-                                        "Virtual adress: " + c.getInstructions().get(vtimer).getAddress());
+        if(c.getInstructions().size() > vtimer){
+            lbNextInstructionSpec.setText("Process: " + c.getInstructions().get(vtimer).getPid() + "\n" +
+                    "Operation: " + c.getInstructions().get(vtimer).getOperation() + "\n" +
+                    "Virtual adress: " + c.getInstructions().get(vtimer).getAddress());
+        }
+        else{
+            lbNextInstructionSpec.setText("NA");
+        }
+
     }
     private void updateFrames(){
         tvFrames.getItems().clear();
