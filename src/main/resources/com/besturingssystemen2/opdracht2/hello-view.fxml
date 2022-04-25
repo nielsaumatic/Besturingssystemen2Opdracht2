@@ -37,5 +37,12 @@
       <Label layoutX="584.0" layoutY="260.0" text="Frames in RAM" />
       <Label fx:id="lbLastInstruction" layoutX="15.0" layoutY="31.0" text="Last instruction:" />
       <Label fx:id="lbLastInstructionSpec" layoutX="110.0" layoutY="31.0" text="NA" />
+      <TableView fx:id="tvPageWrites" layoutX="584.0" layoutY="40.0" prefHeight="200.0" prefWidth="152.0">
+        <columns>
+          <TableColumn fx:id="tcProcess" prefWidth="75.0" text="Process" />
+          <TableColumn fx:id="tcPageWrites" prefWidth="75.0" text="Pagewrites" />
+        </columns>
+      </TableView>
+      <Label layoutX="584.0" layoutY="23.0" text="Pagewrites to RAM" />
    </children>
 </AnchorPane>

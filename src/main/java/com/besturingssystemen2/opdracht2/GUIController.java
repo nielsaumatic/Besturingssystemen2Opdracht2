@@ -33,6 +33,9 @@ public class GUIController implements Initializable {
     public TableColumn tcLastAccess;
     public TableView tvPageTable;
     public Label lbLastInstructionSpec;
+    public TableView tvPageWrites;
+    public TableColumn tcProcess;
+    public TableColumn tcPageWrites;
     @FXML
     private Label lbTimer;
     @FXML
@@ -72,6 +75,9 @@ public class GUIController implements Initializable {
         vprocesseninram = copy(c.getProcessesInRAM());
         vtimer = c.getTimer();
         vram = copy(c.getRAM());
+
+        updatePageWrites();
+
         c.oneInstruction();
 
         lbTimer.setText("Timer: " + vtimer);
@@ -81,6 +87,7 @@ public class GUIController implements Initializable {
         updateNextInstruction();
         updateLastInstruction();
         updateFrames();
+
 
         updatePageTable();
 
@@ -133,6 +140,13 @@ public class GUIController implements Initializable {
         tcFrame.setCellValueFactory(new PropertyValueFactory<>("frameNumber"));
         tcPid.setCellValueFactory(new PropertyValueFactory<>("pid"));
         tcPagenumber.setCellValueFactory(new PropertyValueFactory<>("pageNumber"));
+    }
+
+    private void updatePageWrites(){
+        tvPageWrites.getItems().clear();
+        tvPageWrites.getItems().addAll(c.getProcesses());
+        tcProcess.setCellValueFactory(new PropertyValueFactory<>("pid"));
+        tcPageWrites.setCellValueFactory(new PropertyValueFactory<>("pageFaults"));
     }
 
     private void updatePageTable(){
