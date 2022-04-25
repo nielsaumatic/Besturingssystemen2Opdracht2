@@ -2,6 +2,8 @@ package com.besturingssystemen2.opdracht2;
 
 public class Page {
 
+    private final int pageNumber;
+
     private boolean present;
 
     private boolean modify;
@@ -10,14 +12,12 @@ public class Page {
 
     private int frameNumber;
 
-    private int pageNumber;
-
     public Page(int i) {
+        this.pageNumber = i;
         this.present = false;
         this.modify = false;
         this.lastAccess = -1;
         this.frameNumber = -1;
-        this.pageNumber = i;
     }
 
     public int getPageNumber() {

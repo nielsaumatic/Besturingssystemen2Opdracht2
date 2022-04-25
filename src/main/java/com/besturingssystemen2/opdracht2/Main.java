@@ -5,9 +5,9 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        List<Instruction> instructions = Utility.readXML("Instructions_30_3.xml");
+        //List<Instruction> instructions = Utility.readXML("Instructions_30_3.xml");
 
-        Controller controller = new Controller(instructions);
+        //Controller controller = new Controller(instructions);
 
         //controller.allInstructions();
 

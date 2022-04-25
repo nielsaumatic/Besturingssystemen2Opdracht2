@@ -185,6 +185,7 @@ public class Controller {
             }
             lruFrame.setPage(page);
             page.setPage(lruFrame.getFrameNumber());
+            process.incrementPageFaults();
         }
         page.setLastAccess(timer);
     }

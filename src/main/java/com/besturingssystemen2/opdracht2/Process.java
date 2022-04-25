@@ -8,7 +8,7 @@ public class Process {
     private final int pid;
     private final List<Page> pageTable;
 
-    private int numberOfWrites;
+    private int pageFaults;
 
     public Process(int pid) {
         this.pid = pid;
@@ -18,7 +18,7 @@ public class Process {
             pageTable.add(new Page(i));
         }
 
-        numberOfWrites = 0;
+        pageFaults = 0;
     }
 
     public int getPid() {
@@ -29,12 +29,12 @@ public class Process {
         return pageTable;
     }
 
-    public int getNumberOfWrites() {
-        return numberOfWrites;
+    public int getPageFaults() {
+        return pageFaults;
     }
 
-    public void setNumberOfWrites(int numberOfWrites) {
-        this.numberOfWrites = numberOfWrites;
+    public void setPageFaults(int pageFaults) {
+        this.pageFaults = pageFaults;
     }
 
     public int addressToPage(int address) {
@@ -46,7 +46,6 @@ public class Process {
     }
 
     public void writeToAddress(int address) {
-        numberOfWrites++;
         pageTable.get(addressToPage(address)).setModify(true);
     }
 
@@ -54,5 +53,8 @@ public class Process {
         return pageTable.get(addressToPage(address));
     }
 
+    public void incrementPageFaults() {
+        pageFaults++;
+    }
 }
 
