@@ -131,7 +131,9 @@ public class Controller {
     }
 
     public void oneInstruction() {
-        selectInstruction(instructions.get(timer));
+        if(timer < instructions.size()) {
+            selectInstruction(instructions.get(timer));
+        }
     }
 
     public void allInstructions() {
