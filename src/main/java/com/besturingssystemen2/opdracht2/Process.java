@@ -15,7 +15,7 @@ public class Process {
 
         this.pageTable = new ArrayList<>();
         for (int i = 0; i < 16; i++) {
-            pageTable.add(new Page());
+            pageTable.add(new Page(i));
         }
 
         numberOfWrites = 0;

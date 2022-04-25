@@ -10,11 +10,18 @@ public class Page {
 
     private int frameNumber;
 
-    public Page() {
+    private int pageNumber;
+
+    public Page(int i) {
         this.present = false;
         this.modify = false;
         this.lastAccess = -1;
         this.frameNumber = -1;
+        this.pageNumber = i;
+    }
+
+    public int getPageNumber() {
+        return pageNumber;
     }
 
     public boolean isPresent() {

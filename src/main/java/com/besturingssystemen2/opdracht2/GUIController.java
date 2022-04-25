@@ -32,6 +32,7 @@ public class GUIController implements Initializable {
     public TableColumn tcModify;
     public TableColumn tcLastAccess;
     public TableView tvPageTable;
+    public Label lbLastInstructionSpec;
     @FXML
     private Label lbTimer;
     @FXML
@@ -46,24 +47,40 @@ public class GUIController implements Initializable {
 
     List<Process> vprocesses = c.getProcesses();
 
+    public static List<Frame> copy(List<Frame> list) {
+        ArrayList<Frame> copy = new ArrayList<>();
+
+        Iterator<Frame> iterator = list.iterator();
+        while(iterator.hasNext()){
+            copy.add(new Frame(iterator.next()));
+        }
+        return copy;
+    }
+
+    public static Set<Integer> copy(Set<Integer> set) {
+        Set<Integer> copy = new HashSet<Integer>();
+
+        Iterator<Integer> iterator = set.iterator();
+        while(iterator.hasNext()){
+            copy.add(iterator.next());
+        }
+        return copy;
+    }
+
     @FXML
-    public void step(ActionEvent actionEvent) {
+    public void step() {
+        vprocesseninram = copy(c.getProcessesInRAM());
+        vtimer = c.getTimer();
+        vram = copy(c.getRAM());
+        c.oneInstruction();
 
-
-
-        lbTimer.setText("Timer: " + String.valueOf(c.getTimer()));
+        lbTimer.setText("Timer: " + vtimer);
         lvRam.getItems().clear();
-        lvRam.getItems().addAll(c.getProcessesInRAM());
+        lvRam.getItems().addAll(vprocesseninram);
         resetLvPagesRam();
         updateNextInstruction();
+        updateLastInstruction();
         updateFrames();
-
-        vprocesseninram.clear();
-        vprocesseninram.addAll(c.getProcessesInRAM());
-        vtimer = c.getTimer();
-        vram.clear();
-        vram.addAll(c.getRAM());
-        c.oneInstruction();
 
         updatePageTable();
 
@@ -100,29 +117,31 @@ public class GUIController implements Initializable {
         c.oneInstruction();
     }
 
+    private void updateLastInstruction(){
+        lbLastInstructionSpec.setText("Process: " + c.getInstructions().get(vtimer-1).getPid() + "\n" +
+                                        "Operation: " + c.getInstructions().get(vtimer-1).getOperation() + "\n" +
+                                        "Virtual adress: " + c.getInstructions().get(vtimer-1).getAddress());
+    }
     private void updateNextInstruction(){
-        lbNextInstructionSpec.setText("Process: " + c.getInstructions().get(c.getTimer()).getPid() + "\n" +
-                                        "Operation: " + c.getInstructions().get(c.getTimer()).getOperation() + "\n" +
-                                        "Virtual adress: " + c.getInstructions().get(c.getTimer()).getAddress());
+        lbNextInstructionSpec.setText("Process: " + c.getInstructions().get(vtimer).getPid() + "\n" +
+                                        "Operation: " + c.getInstructions().get(vtimer).getOperation() + "\n" +
+                                        "Virtual adress: " + c.getInstructions().get(vtimer).getAddress());
     }
     private void updateFrames(){
         tvFrames.getItems().clear();
-        tvFrames.getItems().addAll(c.getRAM());
+        tvFrames.getItems().addAll(vram);
         tcFrame.setCellValueFactory(new PropertyValueFactory<>("frameNumber"));
         tcPid.setCellValueFactory(new PropertyValueFactory<>("pid"));
+        tcPagenumber.setCellValueFactory(new PropertyValueFactory<>("pageNumber"));
     }
 
     private void updatePageTable(){
-        ArrayList<Integer> a = new ArrayList();
-        for(int i=0;i<16;i++){
-            a.add(i);
-        }
         tvPageTable.getItems().clear();
         //tvPageTable.getItems().addAll(c.getProcesses().get(c.getInstructions().get(vtimer).getPid()).getPageTable());
         tvPageTable.getItems().addAll(c.getProcesses().stream().filter(p -> p.getPid() == c.getInstructions().get(vtimer).getPid())
                 .findFirst().orElse(null)
                 .getPageTable());
-        //tvPageTable.getItems().addAll(a);
+        tcPage.setCellValueFactory(new PropertyValueFactory<>("pageNumber"));
         tcPresent.setCellValueFactory(new PropertyValueFactory<>("present"));
         tcModify.setCellValueFactory(new PropertyValueFactory<>("modify"));
         tcLastAccess.setCellValueFactory(new PropertyValueFactory<>("lastAccess"));

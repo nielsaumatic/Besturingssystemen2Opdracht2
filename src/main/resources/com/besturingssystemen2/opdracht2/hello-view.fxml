@@ -7,25 +7,25 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.besturingssystemen2.opdracht2.GUIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="890.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.besturingssystemen2.opdracht2.GUIController">
    <children>
       <Label id="lbTimer" fx:id="lbTimer" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="57.0" text="Timer: 0" />
-      <Button id="btStep" fx:id="btStep" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#step" text="Step" />
-      <Button fx:id="btRunAll" layoutX="71.0" layoutY="361.0" mnemonicParsing="false" onAction="#runAll" text="Run All" />
-      <ListView fx:id="lvRam" layoutX="14.0" layoutY="154.0" prefHeight="200.0" prefWidth="95.0" />
-      <Label layoutX="14.0" layoutY="137.0" text="Processen in RAM" />
-      <ListView fx:id="lvFramesRam" layoutX="125.0" layoutY="154.0" prefHeight="200.0" prefWidth="95.0" />
-      <Label fx:id="lbFramesRam" layoutX="125.0" layoutY="137.0" text="Frames in RAM" />
-      <Label fx:id="lbNextInstruction" layoutX="14.0" layoutY="31.0" text="Next instruction:" />
-      <Label fx:id="lbNextInstructionSpec" layoutX="109.0" layoutY="31.0" text="inst" />
-      <TableView fx:id="tvFrames" layoutX="574.0" layoutY="31.0" prefHeight="200.0" prefWidth="253.0">
+      <Button id="btStep" fx:id="btStep" layoutX="14.0" layoutY="484.0" mnemonicParsing="false" onAction="#step" text="Step" />
+      <Button fx:id="btRunAll" layoutX="71.0" layoutY="484.0" mnemonicParsing="false" onAction="#runAll" text="Run All" />
+      <ListView fx:id="lvRam" layoutX="14.0" layoutY="277.0" prefHeight="200.0" prefWidth="95.0" />
+      <Label layoutX="14.0" layoutY="260.0" text="Processen in RAM" />
+      <ListView fx:id="lvFramesRam" layoutX="125.0" layoutY="277.0" prefHeight="200.0" prefWidth="95.0" />
+      <Label fx:id="lbFramesRam" layoutX="125.0" layoutY="260.0" text="Frames in RAM" />
+      <Label fx:id="lbNextInstruction" layoutX="14.0" layoutY="103.0" text="Next instruction:" />
+      <Label fx:id="lbNextInstructionSpec" layoutX="109.0" layoutY="103.0" text="inst" />
+      <TableView fx:id="tvFrames" layoutX="584.0" layoutY="277.0" prefHeight="200.0" prefWidth="253.0">
         <columns>
           <TableColumn fx:id="tcFrame" prefWidth="75.0" text="Frame" />
           <TableColumn fx:id="tcPid" prefWidth="75.0" text="Pid" />
             <TableColumn fx:id="tcPagenumber" prefWidth="102.0" text="Pagenumber" />
         </columns>
       </TableView>
-      <TableView fx:id="tvPageTable" layoutX="245.0" layoutY="154.0" prefHeight="200.0" prefWidth="300.0">
+      <TableView fx:id="tvPageTable" layoutX="245.0" layoutY="277.0" prefHeight="200.0" prefWidth="300.0">
         <columns>
           <TableColumn fx:id="tcPage" prefWidth="75.0" text="Page" />
           <TableColumn fx:id="tcPresent" prefWidth="75.0" text="Present" />
@@ -33,5 +33,9 @@
             <TableColumn fx:id="tcLastAccess" prefWidth="75.0" text="Last Access" />
         </columns>
       </TableView>
+      <Label layoutX="245.0" layoutY="260.0" text="PageTable" />
+      <Label layoutX="584.0" layoutY="260.0" text="Frames in RAM" />
+      <Label fx:id="lbLastInstruction" layoutX="15.0" layoutY="31.0" text="Last instruction:" />
+      <Label fx:id="lbLastInstructionSpec" layoutX="110.0" layoutY="31.0" text="NA" />
    </children>
 </AnchorPane>
