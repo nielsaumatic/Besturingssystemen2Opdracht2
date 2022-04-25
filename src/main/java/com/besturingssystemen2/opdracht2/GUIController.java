@@ -102,11 +102,14 @@ public class GUIController implements Initializable {
         resetNextInstruction();
         updateLastInstruction();
         updateFrames();
+        lvRam.getItems().clear();
+        resetLvPagesRam();
+        clearPageTable();
     }
 
     private void resetLvPagesRam(){
         lvFramesRam.getItems().clear();
-        lvFramesRam.getItems().add("Selecteer een proces");
+        lvFramesRam.getItems().add("Select a process");
     }
 
     @Override
@@ -183,4 +186,7 @@ public class GUIController implements Initializable {
         tcLastAccess.setCellValueFactory(new PropertyValueFactory<>("lastAccess"));
     }
 
+    private void clearPageTable(){
+        tvPageTable.getItems().clear();
+    }
 }
