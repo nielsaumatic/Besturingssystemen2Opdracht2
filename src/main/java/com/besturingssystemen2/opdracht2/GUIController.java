@@ -93,15 +93,20 @@ public class GUIController implements Initializable {
 
     }
 
-    private void resetLvPagesRam(){
-        lvFramesRam.getItems().clear();
-        lvFramesRam.getItems().add("Selecteer een proces");
-    }
-
     @FXML
     public void runAll(ActionEvent actionEvent) {
         c.allInstructions();
-        lbTimer.setText(String.valueOf(c.getTimer()));
+        vram = copy(c.getRAM());
+        lbTimer.setText("Timer: " + c.getTimer());
+        updatePageWrites();
+        resetNextInstruction();
+        updateLastInstruction();
+        updateFrames();
+    }
+
+    private void resetLvPagesRam(){
+        lvFramesRam.getItems().clear();
+        lvFramesRam.getItems().add("Selecteer een proces");
     }
 
     @Override
@@ -125,9 +130,16 @@ public class GUIController implements Initializable {
     }
 
     private void updateLastInstruction(){
-        lbLastInstructionSpec.setText("Process: " + c.getInstructions().get(vtimer-1).getPid() + "\n" +
-                                        "Operation: " + c.getInstructions().get(vtimer-1).getOperation() + "\n" +
-                                        "Virtual adress: " + c.getInstructions().get(vtimer-1).getAddress());
+        if(vtimer-1 >= 0){
+            lbLastInstructionSpec.setText("Process: " + c.getInstructions().get(vtimer-1).getPid() + "\n" +
+                    "Operation: " + c.getInstructions().get(vtimer-1).getOperation() + "\n" +
+                    "Virtual adress: " + c.getInstructions().get(vtimer-1).getAddress());
+        }
+        else{
+            lbLastInstructionSpec.setText("Process: " + c.getInstructions().get(c.getInstructions().size()-1).getPid() + "\n" +
+                                        "Operation: " + c.getInstructions().get(c.getInstructions().size()-1).getOperation() + "\n" +
+                                        "Virtual adress: " + c.getInstructions().get(c.getInstructions().size()-1).getAddress());
+        }
     }
     private void updateNextInstruction(){
         if(c.getInstructions().size() > vtimer){
@@ -136,10 +148,14 @@ public class GUIController implements Initializable {
                     "Virtual adress: " + c.getInstructions().get(vtimer).getAddress());
         }
         else{
-            lbNextInstructionSpec.setText("NA");
+            resetNextInstruction();
         }
-
     }
+
+    private void resetNextInstruction(){
+        lbNextInstructionSpec.setText("NA");
+    }
+
     private void updateFrames(){
         tvFrames.getItems().clear();
         tvFrames.getItems().addAll(vram);
