@@ -13,6 +13,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.net.URL;
 import java.util.*;
 
+import static java.lang.Math.floor;
+
 public class GUIController implements Initializable {
     public String selectedp;
     public ListView lvFramesRam;
@@ -163,14 +165,17 @@ public class GUIController implements Initializable {
 
     private void updateLastInstruction(){
         if(vtimer-1 >= 0 && !ranAll){
-            lbLastInstructionSpec.setText("Process: " + c.getInstructions().get(vtimer-1).getPid() + "\n" +
+            int vaddress = c.getInstructions().get(vtimer-1).getAddress();
+            int pid = c.getInstructions().get(vtimer-1).getPid();
+            lbLastInstructionSpec.setText("Process: " + pid + "\n" +
                     "Operation: " + c.getInstructions().get(vtimer-1).getOperation() + "\n" +
-                    "Virtual adress: " + c.getInstructions().get(vtimer-1).getAddress());
+                    "Virtual address: " + vaddress + "\n" +
+                    "Physical address: " + toPhysical(vaddress, pid));
         }
         else{
             lbLastInstructionSpec.setText("Process: " + c.getInstructions().get(c.getInstructions().size()-1).getPid() + "\n" +
                                         "Operation: " + c.getInstructions().get(c.getInstructions().size()-1).getOperation() + "\n" +
-                                        "Virtual adress: " + c.getInstructions().get(c.getInstructions().size()-1).getAddress());
+                                        "Virtual address: " + c.getInstructions().get(c.getInstructions().size()-1).getAddress());
         }
     }
 
@@ -178,7 +183,7 @@ public class GUIController implements Initializable {
         if(c.getInstructions().size() > vtimer){
             lbNextInstructionSpec.setText("Process: " + c.getInstructions().get(vtimer).getPid() + "\n" +
                     "Operation: " + c.getInstructions().get(vtimer).getOperation() + "\n" +
-                    "Virtual adress: " + c.getInstructions().get(vtimer).getAddress());
+                    "Virtual address: " + c.getInstructions().get(vtimer).getAddress());
         }
         else{
             resetNextInstruction();
@@ -187,6 +192,25 @@ public class GUIController implements Initializable {
 
     private void resetNextInstruction(){
         lbNextInstructionSpec.setText("NA");
+    }
+
+    private String toPhysical(int va, int pid){
+        String a = "";
+        int vpn = (int)floor(va / 4096);
+        int offset = (int)va % 4096;
+
+        Process p = vprocesses.stream().filter(pr -> pr.getPid()==pid).findFirst().orElse(null);
+        assert p != null;
+        int pfn = p.getPageTable().stream().filter(pa -> pa.getPageNumber()==vpn).findFirst().orElse(null).getFrameNumber();
+
+        if(pfn==-1){
+            a += "PageFault";
+        }
+        else{
+            int pa = pfn * 4096 + offset;
+            a += pa;
+        }
+        return a;
     }
 
     private void updateFrames(){
