@@ -100,9 +100,9 @@ public class GUIController implements Initializable {
                 updatePageTable();
             }
 
-            lvRam.getItems().clear();
-            lvRam.getItems().addAll(vprocesseninram);
-            resetLvPagesRam();
+//            lvRam.getItems().clear();
+//            lvRam.getItems().addAll(vprocesseninram);
+//            resetLvPagesRam();
         }
     }
 
@@ -117,7 +117,7 @@ public class GUIController implements Initializable {
         resetNextInstruction();
         updateLastInstruction();
         updateFrames();
-        lvRam.getItems().clear();
+        //lvRam.getItems().clear();
         resetLvPagesRam();
         clearPageTable();
     }
@@ -147,17 +147,17 @@ public class GUIController implements Initializable {
             }
         });
 
-        lvRam.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Integer>() {
-            @Override
-            public void changed(ObservableValue<? extends Integer> observableValue, Integer s, Integer t1) {
-                selectedp = String.valueOf(lvRam.getSelectionModel().getSelectedItem());
-                lvFramesRam.getItems().clear();
-                lvFramesRam.getItems().addAll(vram.stream().filter(f -> !lvRam.getSelectionModel().isEmpty()).filter(f -> f.getPid() == lvRam.getSelectionModel()
-                                .getSelectedItem())
-                        .map(Frame::getFrameNumber)
-                        .toList());
-            }
-        });
+//        lvRam.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Integer>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Integer> observableValue, Integer s, Integer t1) {
+//                selectedp = String.valueOf(lvRam.getSelectionModel().getSelectedItem());
+//                lvFramesRam.getItems().clear();
+//                lvFramesRam.getItems().addAll(vram.stream().filter(f -> !lvRam.getSelectionModel().isEmpty()).filter(f -> f.getPid() == lvRam.getSelectionModel()
+//                                .getSelectedItem())
+//                        .map(Frame::getFrameNumber)
+//                        .toList());
+//            }
+//        });
 
         c.oneInstruction();
         updatePageTable();
@@ -223,7 +223,13 @@ public class GUIController implements Initializable {
 
     private void updatePageWrites(){
         tvPageWrites.getItems().clear();
-        tvPageWrites.getItems().addAll(c.getProcesses());
+        if(!ranAll){
+            tvPageWrites.getItems().addAll(vprocesses);
+        }
+        else{
+            tvPageWrites.getItems().addAll(c.getProcesses());
+        }
+
         tcProcess.setCellValueFactory(new PropertyValueFactory<>("pid"));
         tcPageWrites.setCellValueFactory(new PropertyValueFactory<>("pageFaults"));
     }
