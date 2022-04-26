@@ -7,15 +7,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class GUIController implements Initializable {
     public String selectedp;
@@ -36,6 +32,8 @@ public class GUIController implements Initializable {
     public TableView tvPageWrites;
     public TableColumn tcProcess;
     public TableColumn tcPageWrites;
+    public ChoiceBox cbPageTable;
+    public String selectedInstruction = "Next instruction";
     @FXML
     private Label lbTimer;
     @FXML
@@ -49,8 +47,9 @@ public class GUIController implements Initializable {
     Controller c = new Controller(instructions);
 
     List<Process> vprocesses = c.getProcesses();
+    Boolean ranAll = false;
 
-    public static List<Frame> copy(List<Frame> list) {
+    public static List<Frame> copyFrameList(List<Frame> list) {
         ArrayList<Frame> copy = new ArrayList<>();
 
         Iterator<Frame> iterator = list.iterator();
@@ -70,33 +69,47 @@ public class GUIController implements Initializable {
         return copy;
     }
 
+    public static List<Process> copy(List<Process> list) {
+        ArrayList<Process> copy = new ArrayList<>();
+
+        Iterator<Process> iterator = list.iterator();
+        while(iterator.hasNext()){
+            copy.add(new Process(iterator.next()));
+        }
+        return copy;
+    }
+
     @FXML
     public void step() {
-        vprocesseninram = copy(c.getProcessesInRAM());
-        vtimer = c.getTimer();
-        vram = copy(c.getRAM());
+        if(!ranAll){
+            vprocesses = copy(c.getProcesses());
+            vprocesseninram = copy(c.getProcessesInRAM());
+            vtimer = c.getTimer();
+            vram = copyFrameList(c.getRAM());
 
-        lbTimer.setText("Timer: " + vtimer);
-        updatePageWrites();
-        updateNextInstruction();
-        updateLastInstruction();
-        updateFrames();
+            lbTimer.setText("Timer: " + vtimer);
+            updatePageWrites();
+            updateNextInstruction();
+            updateLastInstruction();
+            updateFrames();
 
-        if(c.getInstructions().size() > vtimer) {
-            c.oneInstruction();
-            updatePageTable();
+            if(c.getInstructions().size() > vtimer) {
+                c.oneInstruction();
+                updatePageTable();
+            }
+
+            lvRam.getItems().clear();
+            lvRam.getItems().addAll(vprocesseninram);
+            resetLvPagesRam();
         }
-
-        lvRam.getItems().clear();
-        lvRam.getItems().addAll(vprocesseninram);
-        resetLvPagesRam();
-
     }
 
     @FXML
     public void runAll(ActionEvent actionEvent) {
         c.allInstructions();
-        vram = copy(c.getRAM());
+        vprocesses = new ArrayList<>();
+        ranAll = true;
+        vram = copyFrameList(c.getRAM());
         lbTimer.setText("Timer: " + c.getTimer());
         updatePageWrites();
         resetNextInstruction();
@@ -116,6 +129,21 @@ public class GUIController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateFrames();
         updateNextInstruction();
+        cbPageTable.getItems().addAll("Next instruction", "Last instruction");
+        cbPageTable.setValue("Next instruction");
+
+        cbPageTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                selectedInstruction = String.valueOf(cbPageTable.getSelectionModel().getSelectedItem());
+                if(!ranAll){
+                    updatePageTable();
+                }
+                else{
+                    updatePageTableEnd();
+                }
+            }
+        });
 
         lvRam.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Integer>() {
             @Override
@@ -130,10 +158,11 @@ public class GUIController implements Initializable {
         });
 
         c.oneInstruction();
+        updatePageTable();
     }
 
     private void updateLastInstruction(){
-        if(vtimer-1 >= 0){
+        if(vtimer-1 >= 0 && !ranAll){
             lbLastInstructionSpec.setText("Process: " + c.getInstructions().get(vtimer-1).getPid() + "\n" +
                     "Operation: " + c.getInstructions().get(vtimer-1).getOperation() + "\n" +
                     "Virtual adress: " + c.getInstructions().get(vtimer-1).getAddress());
@@ -144,6 +173,7 @@ public class GUIController implements Initializable {
                                         "Virtual adress: " + c.getInstructions().get(c.getInstructions().size()-1).getAddress());
         }
     }
+
     private void updateNextInstruction(){
         if(c.getInstructions().size() > vtimer){
             lbNextInstructionSpec.setText("Process: " + c.getInstructions().get(vtimer).getPid() + "\n" +
@@ -176,10 +206,32 @@ public class GUIController implements Initializable {
 
     private void updatePageTable(){
         tvPageTable.getItems().clear();
-        //tvPageTable.getItems().addAll(c.getProcesses().get(c.getInstructions().get(vtimer).getPid()).getPageTable());
-        tvPageTable.getItems().addAll(c.getProcesses().stream().filter(p -> p.getPid() == c.getInstructions().get(vtimer).getPid())
-                .findFirst().orElse(null)
-                .getPageTable());
+
+        if(Objects.equals(selectedInstruction, "Next instruction")){
+            tvPageTable.getItems().addAll(c.getProcesses().stream().filter(p -> p.getPid() == c.getInstructions().get(vtimer).getPid())
+                    .findFirst().orElse(null)
+                    .getPageTable());
+        }
+        else if(vtimer-1 >= 0){
+            tvPageTable.getItems().addAll(vprocesses.stream().filter(p -> p.getPid() == c.getInstructions().get(vtimer-1).getPid())
+                    .findFirst().orElse(new Process())
+                    .getPageTable());
+        }
+
+        tcPage.setCellValueFactory(new PropertyValueFactory<>("pageNumber"));
+        tcPresent.setCellValueFactory(new PropertyValueFactory<>("present"));
+        tcModify.setCellValueFactory(new PropertyValueFactory<>("modify"));
+        tcLastAccess.setCellValueFactory(new PropertyValueFactory<>("lastAccess"));
+    }
+
+    private void updatePageTableEnd(){
+        clearPageTable();
+        if(Objects.equals(selectedInstruction, "Last instruction")){
+            tvPageTable.getItems().addAll(vprocesses.stream().filter(p -> p.getPid() == c.getInstructions().get(vtimer-1).getPid())
+                    .findFirst().orElse(new Process())
+                    .getPageTable());
+        }
+
         tcPage.setCellValueFactory(new PropertyValueFactory<>("pageNumber"));
         tcPresent.setCellValueFactory(new PropertyValueFactory<>("present"));
         tcModify.setCellValueFactory(new PropertyValueFactory<>("modify"));

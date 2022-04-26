@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
@@ -33,7 +34,7 @@
             <TableColumn fx:id="tcLastAccess" prefWidth="75.0" text="Last Access" />
         </columns>
       </TableView>
-      <Label layoutX="245.0" layoutY="260.0" text="PageTable" />
+      <Label layoutX="245.0" layoutY="232.0" text="PageTable" />
       <Label layoutX="584.0" layoutY="260.0" text="Frames in RAM" />
       <Label fx:id="lbLastInstruction" layoutX="15.0" layoutY="31.0" text="Last instruction:" />
       <Label fx:id="lbLastInstructionSpec" layoutX="110.0" layoutY="31.0" text="NA" />
@@ -44,5 +45,6 @@
         </columns>
       </TableView>
       <Label layoutX="584.0" layoutY="23.0" text="Pagewrites to RAM" />
+      <ChoiceBox fx:id="cbPageTable" layoutX="245.0" layoutY="248.0" prefHeight="25.0" prefWidth="140.0" />
    </children>
 </AnchorPane>

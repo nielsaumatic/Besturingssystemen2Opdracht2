@@ -8,7 +8,9 @@ public class Frame {
     public Frame(Frame f){
         this.frameNumber = f.frameNumber;
         this.pid = f.pid;
-        this.page = f.page;
+        if(f.page != null){
+            this.page = new Page(f.page);
+        }
     }
 
     public Frame(int frameNumber) {

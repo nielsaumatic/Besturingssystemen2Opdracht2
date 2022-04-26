@@ -20,6 +20,14 @@ public class Page {
         this.frameNumber = -1;
     }
 
+    public Page(Page p){
+        this.pageNumber = p.pageNumber;
+        this.present = p.present;
+        this.modify = p.modify;
+        this.lastAccess = p.lastAccess;
+        this.frameNumber = p.frameNumber;
+    }
+
     public int getPageNumber() {
         return pageNumber;
     }
