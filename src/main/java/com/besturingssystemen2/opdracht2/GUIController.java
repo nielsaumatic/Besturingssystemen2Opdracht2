@@ -47,29 +47,21 @@ public class GUIController implements Initializable {
     public static List<Frame> copyFrameList(List<Frame> list) {
         ArrayList<Frame> copy = new ArrayList<>();
 
-        Iterator<Frame> iterator = list.iterator();
-        while(iterator.hasNext()){
-            copy.add(new Frame(iterator.next()));
+        for (Frame frame : list) {
+            copy.add(new Frame(frame));
         }
         return copy;
     }
 
     public static Set<Integer> copy(Set<Integer> set) {
-        Set<Integer> copy = new HashSet<Integer>();
-
-        Iterator<Integer> iterator = set.iterator();
-        while(iterator.hasNext()){
-            copy.add(iterator.next());
-        }
-        return copy;
+        return new HashSet<Integer>(set);
     }
 
     public static List<Process> copy(List<Process> list) {
         ArrayList<Process> copy = new ArrayList<>();
 
-        Iterator<Process> iterator = list.iterator();
-        while(iterator.hasNext()){
-            copy.add(new Process(iterator.next()));
+        for (Process process : list) {
+            copy.add(new Process(process));
         }
         return copy;
     }
