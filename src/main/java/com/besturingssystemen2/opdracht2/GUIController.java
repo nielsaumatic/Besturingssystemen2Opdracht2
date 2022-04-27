@@ -99,10 +99,6 @@ public class GUIController implements Initializable {
                 c.oneInstruction();
                 updatePageTable();
             }
-
-//            lvRam.getItems().clear();
-//            lvRam.getItems().addAll(vprocesseninram);
-//            resetLvPagesRam();
         }
     }
 
@@ -117,14 +113,7 @@ public class GUIController implements Initializable {
         resetNextInstruction();
         updateLastInstruction();
         updateFrames();
-        //lvRam.getItems().clear();
-        resetLvPagesRam();
-        clearPageTable();
-    }
-
-    private void resetLvPagesRam(){
-        lvFramesRam.getItems().clear();
-        lvFramesRam.getItems().add("Select a process");
+        updatePageTableEnd();
     }
 
     @Override
@@ -132,7 +121,7 @@ public class GUIController implements Initializable {
         updateFrames();
         updateNextInstruction();
         cbPageTable.getItems().addAll("Next instruction", "Last instruction");
-        cbPageTable.setValue("Next instruction");
+        cbPageTable.setValue("Last instruction");
 
         cbPageTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -146,18 +135,6 @@ public class GUIController implements Initializable {
                 }
             }
         });
-
-//        lvRam.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Integer>() {
-//            @Override
-//            public void changed(ObservableValue<? extends Integer> observableValue, Integer s, Integer t1) {
-//                selectedp = String.valueOf(lvRam.getSelectionModel().getSelectedItem());
-//                lvFramesRam.getItems().clear();
-//                lvFramesRam.getItems().addAll(vram.stream().filter(f -> !lvRam.getSelectionModel().isEmpty()).filter(f -> f.getPid() == lvRam.getSelectionModel()
-//                                .getSelectedItem())
-//                        .map(Frame::getFrameNumber)
-//                        .toList());
-//            }
-//        });
 
         c.oneInstruction();
         updatePageTable();
@@ -197,7 +174,7 @@ public class GUIController implements Initializable {
     private String toPhysical(int va, int pid){
         String a = "";
         int vpn = (int)floor(va / 4096);
-        int offset = (int)va % 4096;
+        int offset = va % 4096;
 
         Process p = vprocesses.stream().filter(pr -> pr.getPid()==pid).findFirst().orElse(null);
         assert p != null;
@@ -208,7 +185,7 @@ public class GUIController implements Initializable {
         }
         else{
             int pa = pfn * 4096 + offset;
-            a += pa;
+            a += pa + "\n" + "Page: " + vpn + "\n" + "Offset: " + offset;
         }
         return a;
     }
@@ -257,7 +234,7 @@ public class GUIController implements Initializable {
     private void updatePageTableEnd(){
         clearPageTable();
         if(Objects.equals(selectedInstruction, "Last instruction")){
-            tvPageTable.getItems().addAll(vprocesses.stream().filter(p -> p.getPid() == c.getInstructions().get(vtimer-1).getPid())
+            tvPageTable.getItems().addAll(c.getProcesses().stream().filter(p -> p.getPid() == c.getInstructions().get(c.getTimer()-1).getPid())
                     .findFirst().orElse(new Process())
                     .getPageTable());
         }

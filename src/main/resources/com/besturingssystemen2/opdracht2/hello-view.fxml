@@ -12,8 +12,8 @@
       <Label id="lbTimer" fx:id="lbTimer" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="57.0" text="Timer: 0" />
       <Button id="btStep" fx:id="btStep" layoutX="22.0" layoutY="487.0" mnemonicParsing="false" onAction="#step" text="Step" />
       <Button fx:id="btRunAll" layoutX="79.0" layoutY="487.0" mnemonicParsing="false" onAction="#runAll" text="Run All" />
-      <Label fx:id="lbNextInstruction" layoutX="14.0" layoutY="133.0" text="Next instruction:" />
-      <Label fx:id="lbNextInstructionSpec" layoutX="109.0" layoutY="133.0" text="inst" />
+      <Label fx:id="lbNextInstruction" layoutX="14.0" layoutY="152.0" text="Next instruction:" />
+      <Label fx:id="lbNextInstructionSpec" layoutX="109.0" layoutY="152.0" text="inst" />
       <TableView fx:id="tvFrames" layoutX="580.0" layoutY="60.0" prefHeight="424.0" prefWidth="250.0">
         <columns>
           <TableColumn fx:id="tcFrame" prefWidth="75.0" text="Frame" />
