@@ -1,7 +1,5 @@
 package com.besturingssystemen2.opdracht2;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -16,9 +14,6 @@ import java.util.*;
 import static java.lang.Math.floor;
 
 public class GUIController implements Initializable {
-    public String selectedp;
-    public ListView lvFramesRam;
-    public Label lbFramesRam;
     public Label lbNextInstruction;
     public Label lbNextInstructionSpec;
     public TableColumn tcFrame;
@@ -38,8 +33,6 @@ public class GUIController implements Initializable {
     public String selectedInstruction = "Next instruction";
     @FXML
     private Label lbTimer;
-    @FXML
-    private ListView<Integer> lvRam;
 
     Set<Integer> vprocesseninram = new HashSet<>();
     int vtimer = 0;
