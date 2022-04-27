@@ -30,7 +30,7 @@ public class GUIController implements Initializable {
     public TableColumn tcProcess;
     public TableColumn tcPageWrites;
     public ChoiceBox cbPageTable;
-    public String selectedInstruction = "Next instruction";
+    public String selectedInstruction = "Last instruction";
     @FXML
     private Label lbTimer;
 
