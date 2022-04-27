@@ -7,30 +7,31 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="864.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.besturingssystemen2.opdracht2.GUIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="526.0" prefWidth="924.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.besturingssystemen2.opdracht2.GUIController">
    <children>
       <Label id="lbTimer" fx:id="lbTimer" layoutX="14.0" layoutY="14.0" prefHeight="17.0" prefWidth="57.0" text="Timer: 0" />
       <Button id="btStep" fx:id="btStep" layoutX="22.0" layoutY="487.0" mnemonicParsing="false" onAction="#step" text="Step" />
       <Button fx:id="btRunAll" layoutX="79.0" layoutY="487.0" mnemonicParsing="false" onAction="#runAll" text="Run All" />
-      <Label fx:id="lbNextInstruction" layoutX="14.0" layoutY="152.0" text="Next instruction:" />
-      <Label fx:id="lbNextInstructionSpec" layoutX="109.0" layoutY="152.0" text="inst" />
-      <TableView fx:id="tvFrames" layoutX="580.0" layoutY="60.0" prefHeight="424.0" prefWidth="250.0">
+      <Label fx:id="lbNextInstruction" layoutX="14.0" layoutY="145.0" text="Next instruction:" />
+      <Label fx:id="lbNextInstructionSpec" layoutX="109.0" layoutY="145.0" text="inst" />
+      <TableView fx:id="tvFrames" layoutX="648.0" layoutY="74.0" prefHeight="410.0" prefWidth="237.0">
         <columns>
           <TableColumn fx:id="tcFrame" prefWidth="75.0" text="Frame" />
           <TableColumn fx:id="tcPid" prefWidth="75.0" text="Pid" />
-            <TableColumn fx:id="tcPagenumber" prefWidth="102.0" text="Pagenumber" />
+            <TableColumn fx:id="tcPagenumber" prefWidth="85.0" text="Pagenumber" />
         </columns>
       </TableView>
-      <TableView fx:id="tvPageTable" layoutX="265.0" layoutY="59.0" prefHeight="424.0" prefWidth="301.0">
+      <TableView fx:id="tvPageTable" layoutX="265.0" layoutY="73.0" prefHeight="410.0" prefWidth="367.0">
         <columns>
-          <TableColumn fx:id="tcPage" prefWidth="75.0" text="Page" />
-          <TableColumn fx:id="tcPresent" prefWidth="75.0" text="Present" />
-            <TableColumn fx:id="tcModify" prefWidth="75.0" text="Modify" />
-            <TableColumn fx:id="tcLastAccess" prefWidth="75.0" text="Last Access" />
+          <TableColumn fx:id="tcPage" prefWidth="66.0" text="Page" />
+          <TableColumn fx:id="tcPresent" prefWidth="67.0" text="Present" />
+            <TableColumn fx:id="tcModify" prefWidth="65.0" text="Modify" />
+            <TableColumn fx:id="tcLastAccess" prefWidth="95.0" text="Last Access" />
+            <TableColumn fx:id="tcFrameNumber" prefWidth="72.0" text="Frame #" />
         </columns>
       </TableView>
       <Label layoutX="265.0" layoutY="14.0" text="PageTable" />
-      <Label layoutX="580.0" layoutY="43.0" text="Frames in RAM" />
+      <Label layoutX="648.0" layoutY="53.0" text="Frames in RAM" />
       <Label fx:id="lbLastInstruction" layoutX="15.0" layoutY="31.0" text="Last instruction:" />
       <Label fx:id="lbLastInstructionSpec" layoutX="110.0" layoutY="31.0" text="NA" />
       <TableView fx:id="tvPageWrites" layoutX="22.0" layoutY="238.0" prefHeight="244.0" prefWidth="152.0">
@@ -39,7 +40,7 @@
           <TableColumn fx:id="tcPageWrites" prefWidth="75.0" text="Pagewrites" />
         </columns>
       </TableView>
-      <Label layoutX="22.0" layoutY="221.0" text="Pagewrites to RAM" />
-      <ChoiceBox fx:id="cbPageTable" layoutX="265.0" layoutY="30.0" prefHeight="25.0" prefWidth="140.0" />
+      <Label layoutX="21.0" layoutY="215.0" text="Pagewrites to RAM" />
+      <ChoiceBox fx:id="cbPageTable" layoutX="265.0" layoutY="36.0" prefHeight="25.0" prefWidth="140.0" />
    </children>
 </AnchorPane>

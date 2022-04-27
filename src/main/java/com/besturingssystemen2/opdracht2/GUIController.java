@@ -24,6 +24,7 @@ public class GUIController implements Initializable {
     public TableColumn tcPresent;
     public TableColumn tcModify;
     public TableColumn tcLastAccess;
+    public TableColumn tcFrameNumber;
     public TableView tvPageTable;
     public Label lbLastInstructionSpec;
     public TableView tvPageWrites;
@@ -166,7 +167,7 @@ public class GUIController implements Initializable {
         int pfn = p.getPageTable().stream().filter(pa -> pa.getPageNumber()==vpn).findFirst().orElse(null).getFrameNumber();
 
         if(pfn==-1){
-            a += "PageFault";
+            a += "/";
         }
         else{
             int pa = pfn * 4096 + offset;
@@ -214,6 +215,7 @@ public class GUIController implements Initializable {
         tcPresent.setCellValueFactory(new PropertyValueFactory<>("present"));
         tcModify.setCellValueFactory(new PropertyValueFactory<>("modify"));
         tcLastAccess.setCellValueFactory(new PropertyValueFactory<>("lastAccess"));
+        tcFrameNumber.setCellValueFactory(new PropertyValueFactory<>("frameNumber"));
     }
 
     private void updatePageTableEnd(){
@@ -228,6 +230,7 @@ public class GUIController implements Initializable {
         tcPresent.setCellValueFactory(new PropertyValueFactory<>("present"));
         tcModify.setCellValueFactory(new PropertyValueFactory<>("modify"));
         tcLastAccess.setCellValueFactory(new PropertyValueFactory<>("lastAccess"));
+        tcFrameNumber.setCellValueFactory(new PropertyValueFactory<>("frameNumber"));
     }
 
     private void clearPageTable(){
