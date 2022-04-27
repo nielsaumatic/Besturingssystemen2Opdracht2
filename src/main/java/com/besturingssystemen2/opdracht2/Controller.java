@@ -12,8 +12,6 @@ public class Controller {
 
     private final List<Process> processes;
 
-    private final List<Process> processArchive;
-
     private final Set<Integer> processesInRAM;
 
     private final List<Instruction> instructions;
@@ -34,7 +32,6 @@ public class Controller {
 
         this.timer = 0;
         this.processes = new ArrayList<>();
-        this.processArchive = new ArrayList<>();
         this.processesInRAM = new HashSet<>();
         this.instructions = instructions;
     }
@@ -54,7 +51,6 @@ public class Controller {
     public void startInstruction(Instruction instruction) {
         Process p = new Process(instruction.getPid());
         processes.add(p);
-        processArchive.add(p);
 
         if (processesInRAM.size() == 0) {
             for (Frame frame : RAM) {
@@ -201,9 +197,6 @@ public class Controller {
         return instructions;
     }
 
-    public List<Process> getProcessArchive() {
-        return processArchive;
-    }
 
     public List<Process> getProcesses() {
         return processes;
