@@ -1,7 +1,5 @@
 package com.besturingssystemen2.opdracht2;
 
-import java.util.Map;
-
 public class Instruction {
     private final int pid;
     private final String operation;

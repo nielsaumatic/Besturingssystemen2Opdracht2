@@ -16,14 +16,6 @@ public class Controller {
 
     private final List<Instruction> instructions;
 
-    public List<Frame> getRAM() {
-        return RAM;
-    }
-
-    public Set<Integer> getProcessesInRAM() {
-        return processesInRAM;
-    }
-
     public Controller(List<Instruction> instructions) {
         this.RAM = new ArrayList<>();
         for (int i = 0; i < 12; i++) {
@@ -36,7 +28,25 @@ public class Controller {
         this.instructions = instructions;
     }
 
+    public List<Frame> getRAM() {
+        return RAM;
+    }
 
+    public Set<Integer> getProcessesInRAM() {
+        return processesInRAM;
+    }
+
+    public int getTimer(){
+        return timer;
+    }
+
+    public List<Instruction> getInstructions(){
+        return instructions;
+    }
+
+    public List<Process> getProcesses() {
+        return processes;
+    }
 
     public void selectInstruction(Instruction instruction) {
         switch (instruction.getOperation()) {
@@ -127,7 +137,7 @@ public class Controller {
     }
 
     public void oneInstruction() {
-        if(timer < instructions.size()) {
+        if (timer < instructions.size()) {
             selectInstruction(instructions.get(timer));
         }
     }
@@ -189,16 +199,4 @@ public class Controller {
         page.setLastAccess(timer);
     }
 
-    public int getTimer(){
-        return timer;
-    }
-
-    public List<Instruction> getInstructions(){
-        return instructions;
-    }
-
-
-    public List<Process> getProcesses() {
-        return processes;
-    }
 }
