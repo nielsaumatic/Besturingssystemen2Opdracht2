@@ -185,7 +185,7 @@ public class Controller {
         Process process = processes.get(pid);
         int address = instruction.getAddress();
         Page page = process.getPage(address);
-        if (!process.presentInRam(address)) {
+        if (!page.isPresent()) {
             List<Frame> framesInRamWithPid = getFramesInRamWithPid(pid);
             Frame lruFrame = getLruFrame(framesInRamWithPid);
             if (lruFrame.getPage() != null) {

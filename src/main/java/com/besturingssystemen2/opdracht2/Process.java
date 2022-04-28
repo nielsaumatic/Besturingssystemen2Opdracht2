@@ -55,10 +55,6 @@ public class Process {
         return address / 4096;
     }
 
-    public boolean presentInRam(int address) {
-        return pageTable.get(addressToPage(address)).isPresent();
-    }
-
     public void writeToAddress(int address) {
         pageTable.get(addressToPage(address)).setModify(true);
     }
