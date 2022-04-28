@@ -2,7 +2,9 @@ package com.besturingssystemen2.opdracht2;
 
 public class Frame {
     private final int frameNumber;
+
     private int pid;
+
     private Page page;
 
     public Frame(Frame f){

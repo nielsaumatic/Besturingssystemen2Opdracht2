@@ -2,7 +2,9 @@ package com.besturingssystemen2.opdracht2;
 
 public class Instruction {
     private final int pid;
+
     private final String operation;
+
     private final int address;
 
     public Instruction(int pid, String operation, int address) {
