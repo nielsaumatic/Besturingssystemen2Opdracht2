@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utility {
+
+    public static String filename;
+
     public static List<Instruction> readXML(String filename) {
 
         List<Instruction> instructions = new ArrayList<>();

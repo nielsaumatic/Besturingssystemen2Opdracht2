@@ -1,8 +1,5 @@
 package com.besturingssystemen2.opdracht2;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -16,21 +13,21 @@ import static java.lang.Math.floor;
 public class GUIController implements Initializable {
     public Label lbNextInstruction;
     public Label lbNextInstructionSpec;
-    public TableColumn tcFrame;
-    public TableColumn tcPid;
-    public TableColumn tcPagenumber;
-    public TableView tvFrames;
-    public TableColumn tcPage;
-    public TableColumn tcPresent;
-    public TableColumn tcModify;
-    public TableColumn tcLastAccess;
-    public TableColumn tcFrameNumber;
-    public TableView tvPageTable;
+    public TableColumn<Object, Object> tcFrame;
+    public TableColumn<Object, Object> tcPid;
+    public TableColumn<Object, Object> tcPagenumber;
+    public TableView<Frame> tvFrames;
+    public TableColumn<Object, Object> tcPage;
+    public TableColumn<Object, Object> tcPresent;
+    public TableColumn<Object, Object> tcModify;
+    public TableColumn<Object, Object> tcLastAccess;
+    public TableColumn<Object, Object> tcFrameNumber;
+    public TableView<Page> tvPageTable;
     public Label lbLastInstructionSpec;
-    public TableView tvPageWrites;
-    public TableColumn tcProcess;
-    public TableColumn tcPageWrites;
-    public ChoiceBox cbPageTable;
+    public TableView<Process> tvPageWrites;
+    public TableColumn<Object, Object> tcProcess;
+    public TableColumn<Object, Object> tcPageWrites;
+    public ChoiceBox<String> cbPageTable;
     public String selectedInstruction = "Last instruction";
     @FXML
     private Label lbTimer;
@@ -39,7 +36,7 @@ public class GUIController implements Initializable {
     int vtimer = 0;
     List<Frame> vram = new ArrayList<>();
 
-    List<Instruction> instructions = Utility.readXML("Instructions_30_3.xml");
+    List<Instruction> instructions = Utility.readXML(Utility.filename);
     Controller c = new Controller(instructions);
 
     List<Process> vprocesses = c.getProcesses();
@@ -55,7 +52,7 @@ public class GUIController implements Initializable {
     }
 
     public static Set<Integer> copy(Set<Integer> set) {
-        return new HashSet<Integer>(set);
+        return new HashSet<>(set);
     }
 
     public static List<Process> copy(List<Process> list) {
@@ -89,7 +86,7 @@ public class GUIController implements Initializable {
     }
 
     @FXML
-    public void runAll(ActionEvent actionEvent) {
+    public void runAll() {
         c.allInstructions();
         vprocesses = new ArrayList<>();
         ranAll = true;
@@ -109,16 +106,13 @@ public class GUIController implements Initializable {
         cbPageTable.getItems().addAll("Next instruction", "Last instruction");
         cbPageTable.setValue("Last instruction");
 
-        cbPageTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                selectedInstruction = String.valueOf(cbPageTable.getSelectionModel().getSelectedItem());
-                if(!ranAll){
-                    updatePageTable();
-                }
-                else{
-                    updatePageTableEnd();
-                }
+        cbPageTable.getSelectionModel().selectedItemProperty().addListener((observableValue, s, t1) -> {
+            selectedInstruction = String.valueOf(cbPageTable.getSelectionModel().getSelectedItem());
+            if(!ranAll){
+                updatePageTable();
+            }
+            else{
+                updatePageTableEnd();
             }
         });
 
@@ -159,7 +153,7 @@ public class GUIController implements Initializable {
 
     private String toPhysical(int va, int pid){
         String a = "";
-        int vpn = (int)floor(va / 4096);
+        int vpn = (int)floor((double) va / 4096);
         int offset = va % 4096;
 
         Process p = vprocesses.stream().filter(pr -> pr.getPid()==pid).findFirst().orElse(null);
